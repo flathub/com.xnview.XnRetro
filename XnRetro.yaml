@@ -126,5 +126,5 @@ build-commands:
     --remove-key="Name[en_US]"
     "XnRetro/XnRetro.desktop";
     cat "XnRetro-desktop.txt" >> "XnRetro/XnRetro.desktop";
-    install -p -D -m 0644 "XnRetro/XnRetro.desktop" -t "${FLATPAK_DEST}/share/applications/";
+    install -p -D -m 0644 "XnRetro/XnRetro.desktop" "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop";
   - install -p -D -m 0644 "${FLATPAK_ID}.appdata.xml" -t "${FLATPAK_DEST}/share/appdata/";
