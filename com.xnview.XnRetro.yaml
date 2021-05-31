@@ -19,7 +19,7 @@ finish-args:
 tags:
   - proprietary
 add-extensions:
-  org.gnome.Platform.Compat.i386:
+  org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
     version: "20.08"
 modules:
@@ -30,8 +30,8 @@ modules:
   # for display, printing, and conversion
   - ghostscript.yaml
   # /app/XnRetro/XnRetro: error while loading shared libraries: libgstapp-0.10.so.0: cannot open shared object file: No such file or directory
-  # - gstreamer.yaml
-  # - gstreamer-plugins-base.yaml
+  - gstreamer.yaml
+  - gstreamer-plugins-base.yaml
   # "The plugin '/app/XnRetro/lib/imageformats/libqgif.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
   # "The plugin '/app/XnRetro/lib/imageformats/libqico.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
   # "The plugin '/app/XnRetro/lib/imageformats/libqjpeg.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
@@ -43,6 +43,10 @@ modules:
   # /app/XnRetro/XnRetro: error while loading shared libraries: libpng12.so.0: cannot open shared object file: No such file or directory
   - libpng12.yaml
   - XnRetro.yaml
+  - name: 32bit-env-setup
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/lib/i386-linux-gnu
 cleanup:
   - /include
   - /lib/pkgconfig
