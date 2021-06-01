@@ -1,6 +1,5 @@
 name: ghostscript
 config-opts:
-  - --enable-dynamic
   - --disable-cups
   - --disable-dbus
   - --disable-gtk
@@ -16,11 +15,10 @@ build-options:
       cppflags: -DPNG_ARM_NEON_OPT=0
 sources:
   - type: archive
-    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-9.26.tar.xz
-    sha256: 90ed475f37584f646e9ef829932b2525d5c6fc2e0147e8d611bc50aa0e718598
-  # Make sure dvipdf is being run securely
-  # https://src.fedoraproject.org/rpms/ghostscript/raw/40935870ead04e622940b8fcb26f6700c280a01a/f/ghostscript-9.23-100-run-dvipdf-securely.patch
-  - type: patch
-    path: ghostscript-9.23-100-run-dvipdf-securely.patch
+    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9540/ghostscript-9.54.0.tar.xz
+    sha256: c2b7b43cde600f4e70efb2cd95865f6d884a67315c3de235914697d8ccde6e3b
+  - type: shell
+    commands:
+     - "rm -rf lcms2mt jpeg libpng openjpeg zlib"
 cleanup:
   - /share/doc

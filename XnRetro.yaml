@@ -5,13 +5,11 @@ sources:
     url: https://download.xnview.com/XnRetro-126-linux.tgz
     sha256: e0912a4fd9d9e095f695bf6e89b81b3ed9894caca05d247fde9126b3102990cd
     strip-components: 0
-    only-arches: ['i386']
   # For missing dependencies
   - type: archive
     url: https://download.xnview.com/old_versions/XnConvert-151-linux.tgz
     sha256: 6dbb7d33f2fb974d3bdd3dd7f83ca43da5645a0c2b7ace03b154b7caba55b021
     strip-components: 0
-    only-arches: ['i386']
   - type: archive
     url: https://download.xnview.com/old_versions/XnConvert-151-linux-x64.tgz
     sha256: 98947433c114d53013a45c24ad573287f00eaccd182aed58632be2a517af2f4f

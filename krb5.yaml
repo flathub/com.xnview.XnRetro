@@ -1,0 +1,10 @@
+name: krb5
+subdir: "src"
+config-opts:
+ - --disable-static
+ - --disable-rpath
+sources:
+ - type: archive
+   url: https://kerberos.org/dist/krb5/1.18/krb5-1.18.3.tar.gz
+   sha256: e61783c292b5efd9afb45c555a80dd267ac67eebabca42185362bee6c4fbd719
+
