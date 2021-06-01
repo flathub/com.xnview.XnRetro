@@ -22,6 +22,9 @@ sources:
   # https://src.fedoraproject.org/rpms/gstreamer-plugins-base/blob/8d3aebacd645f6b76198485d6a7a77c8322bb013/f/fix-gst-init.patch
   - type: patch
     path: gstreamer-plugins-base-0.10.36-fix-gst-init.patch
+  - type: patch
+    path: gstreamer-plugins-base-0.10.36-build-Adapt-to-backwards-incompatible-change-in-GNU-.patch
+    options: [-dcommon]
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
