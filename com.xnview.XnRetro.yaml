@@ -22,7 +22,7 @@ tags:
 add-extensions:
   org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
-    version: "22.08"
+    version: '22.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Compat.i386
   - org.freedesktop.Sdk.Extension.toolchain-i386
@@ -46,10 +46,14 @@ modules:
       - --with-threads
       - --with-png
     sources:
-      - type: git
-        url: https://github.com/ImageMagick/ImageMagick.git
-        tag: 7.1.1-12
-        commit: a09d8dd5e3a92362cf70c184670b23163587e6f8
+      - type: archive
+        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-12.tar.gz
+        sha256: 51567d11fcbca5bd591d191ce9fdf821e2ed1b12c1ad8bc2a2f13da5c6313f33
+        x-checker-data:
+          type: anitya
+          project-id: 1372
+          stable-only: true
+          url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
     cleanup: ['*']
 
   - name: ghostscript
@@ -63,12 +67,17 @@ modules:
       - type: archive
         url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10012/ghostscript-10.01.2.tar.xz
         sha256: 48d079242a2ca02a2e47a76a52cdfa818b2ad769c2bab00ad0497dd13560e7e7
+        x-checker-data:
+          type: anitya
+          project-id: 1157
+          stable-only: true
+          url-template: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${major}0$minor$patch/ghostscript-$version.tar.xz
       - type: shell
         commands:
-         - "rm -rf tesseract leptonica gpdl cups/libs jpeg libpng openjpeg tiff zlib"
+          - rm -rf tesseract leptonica gpdl cups/libs jpeg libpng openjpeg tiff zlib
 
   - name: krb5
-    subdir: "src"
+    subdir: src
     config-opts:
       - --localstatedir=/var/lib
       - --sbindir=${FLATPAK_DEST}/bin
@@ -76,8 +85,13 @@ modules:
       - --disable-rpath
     sources:
       - type: archive
-        url: https://kerberos.org/dist/krb5/1.21/krb5-1.21.tar.gz
-        sha256: 69f8aaff85484832df67a4bbacd99b9259bd95aab8c651fbbe65cdc9620ea93b
+        url: https://kerberos.org/dist/krb5/1.21/krb5-1.21.1.tar.gz
+        sha256: 7881c3aaaa1b329bd27dbc6bf2bf1c85c5d0b6c7358aff2b35d513ec2d50fa1f
+        x-checker-data:
+          type: html
+          url: https://kerberos.org/dist/
+          version-pattern: Kerberos V5 Release ([\d\.-]*) - current release
+          url-template: https://kerberos.org/dist/krb5/$version0.$version1/krb5-$version.tar.gz
     cleanup:
       - /bin
 
@@ -88,8 +102,12 @@ modules:
       - --with-libpng-compat
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/libpng/libpng-1.2.59.tar.xz
+        url: https://ftp-osl.osuosl.org/pub/libpng/src/libpng12/libpng-1.2.59.tar.xz
         sha256: b4635f15b8adccc8ad0934eea485ef59cc4cae24d0f0300a9a941e51974ffcc7
+        x-checker-data:
+          type: anitya
+          project-id: 7991
+          url-template: https://ftp-osl.osuosl.org/pub/libpng/src/libpng12/libpng-$version.tar.xz
 
   - name: orc
     buildsystem: meson
@@ -99,7 +117,7 @@ modules:
       - -Dtests=disabled
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.32.tar.xz
+        url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.32.tar.xz # >=0.4.33 makes gstreamer0.10-base build fail
         sha256: a66e3d8f2b7e65178d786a01ef61f2a0a0b4d0b8370de7ce134ba73da4af18f0
 
   - name: gstreamer0.10
@@ -145,6 +163,9 @@ modules:
         url: https://download.xnview.com/XnRetro-linux.tgz
         sha256: e0912a4fd9d9e095f695bf6e89b81b3ed9894caca05d247fde9126b3102990cd
         strip-components: 0
+        x-checker-data:
+          type: rotating-url
+          url: https://download.xnview.com/XnRetro-linux.tgz
       - type: archive
         url: https://download.xnview.com/old_versions/XnConvert/XnConvert-1.51-linux.tgz
         sha256: 6dbb7d33f2fb974d3bdd3dd7f83ca43da5645a0c2b7ace03b154b7caba55b021
@@ -153,7 +174,7 @@ modules:
         url: https://download.xnview.com/old_versions/XnConvert/XnConvert-1.51-linux-x64.tgz
         sha256: 98947433c114d53013a45c24ad573287f00eaccd182aed58632be2a517af2f4f
         strip-components: 0
-        only-arches: ['x86_64']
+        only-arches: [x86_64]
       - type: patch
         path: patches/xnretro-1.01-wrapper.patch
         strip-components: 0
