@@ -1,14 +1,12 @@
 app-id: com.xnview.XnRetro
 runtime: org.freedesktop.Platform
-runtime-version: '20.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 command: xnretro
 finish-args:
   # X11 + XShm access
   - --share=ipc
   - --socket=x11
-  # Wayland access
-  #- --socket=wayland
   # Filesystem access
   - --filesystem=home
   # Network access
@@ -24,7 +22,7 @@ tags:
 add-extensions:
   org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
-    version: "20.08"
+    version: '22.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Compat.i386
   - org.freedesktop.Sdk.Extension.toolchain-i386
@@ -36,36 +34,191 @@ build-options:
     CC: i686-unknown-linux-gnu-gcc
     CXX: i686-unknown-linux-gnu-g++
   libdir: /app/lib32
+
 modules:
-  - shared-modules/gtk2/gtk2.json
-  # to resize icon
-  - ImageMagick.yaml
-  # to load PostScript-based file formats (PS + EPS + AI) as well as PDF
-  # for display, printing, and conversion
-  - ghostscript.yaml
-  # /app/XnRetro/XnRetro: error while loading shared libraries: libgstapp-0.10.so.0: cannot open shared object file: No such file or directory
-  - gstreamer.yaml
-  - orc.yaml
-  - gstreamer-plugins-base.yaml
-  # "The plugin '/app/XnRetro/lib/imageformats/libqgif.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqico.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqjpeg.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqmng.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqsvg.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqtga.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  # "The plugin '/app/XnRetro/lib/imageformats/libqtiff.so' uses incompatible Qt library. Expected build key "i386 linux g++-4 full-config", got "x86_64 linux g++-4 full-config""
-  - qt.yaml
-  # /app/XnRetro/XnRetro: error while loading shared libraries: libpng12.so.0: cannot open shared object file: No such file or directory
-  - libpng12.yaml
-  - XnRetro.yaml
+
+  - name: ImageMagick
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --disable-docs
+      - --with-modules
+      - --with-threads
+      - --with-png
+    sources:
+      - type: archive
+        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-12.tar.gz
+        sha256: 51567d11fcbca5bd591d191ce9fdf821e2ed1b12c1ad8bc2a2f13da5c6313f33
+        x-checker-data:
+          type: anitya
+          project-id: 1372
+          stable-only: true
+          url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
+    cleanup: ['*']
+
+  - name: ghostscript
+    config-opts:
+      - --disable-cups
+      - --disable-dbus
+      - --disable-gtk
+      - --with-system-libtiff
+      - --with-drivers=FILES
+    sources:
+      - type: archive
+        url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10012/ghostscript-10.01.2.tar.xz
+        sha256: 48d079242a2ca02a2e47a76a52cdfa818b2ad769c2bab00ad0497dd13560e7e7
+        x-checker-data:
+          type: anitya
+          project-id: 1157
+          stable-only: true
+          url-template: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${major}0$minor$patch/ghostscript-$version.tar.xz
+      - type: shell
+        commands:
+          - rm -rf tesseract leptonica gpdl cups/libs jpeg libpng openjpeg tiff zlib
+
+  - name: krb5
+    subdir: src
+    config-opts:
+      - --localstatedir=/var/lib
+      - --sbindir=${FLATPAK_DEST}/bin
+      - --disable-static
+      - --disable-rpath
+    sources:
+      - type: archive
+        url: https://kerberos.org/dist/krb5/1.21/krb5-1.21.1.tar.gz
+        sha256: 7881c3aaaa1b329bd27dbc6bf2bf1c85c5d0b6c7358aff2b35d513ec2d50fa1f
+        x-checker-data:
+          type: html
+          url: https://kerberos.org/dist/
+          version-pattern: Kerberos V5 Release ([\d\.-]*) - current release
+          url-template: https://kerberos.org/dist/krb5/$version0.$version1/krb5-$version.tar.gz
+    cleanup:
+      - /bin
+
+  - name: libpng12
+    rm-configure: true
+    config-opts:
+      - --disable-static
+      - --with-libpng-compat
+    sources:
+      - type: archive
+        url: https://ftp-osl.osuosl.org/pub/libpng/src/libpng12/libpng-1.2.59.tar.xz
+        sha256: b4635f15b8adccc8ad0934eea485ef59cc4cae24d0f0300a9a941e51974ffcc7
+        x-checker-data:
+          type: anitya
+          project-id: 7991
+          url-template: https://ftp-osl.osuosl.org/pub/libpng/src/libpng12/libpng-$version.tar.xz
+
+  - name: orc
+    buildsystem: meson
+    config-opts:
+      - -Dexamples=disabled
+      - -Dbenchmarks=disabled
+      - -Dtests=disabled
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.32.tar.xz # >=0.4.33 makes gstreamer0.10-base build fail
+        sha256: a66e3d8f2b7e65178d786a01ef61f2a0a0b4d0b8370de7ce134ba73da4af18f0
+
+  - name: gstreamer0.10
+    rm-configure: true
+    config-opts:
+      - --disable-static
+      - --disable-examples
+      - --disable-gtk-doc
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.36.tar.xz
+        sha256: 9151aa108c177054387885763fa0e433e76780f7c5655c70a5390f2a6c6871da
+      - type: patch
+        path: patches/gstreamer-0.10.36-bison3.patch
+
+  - name: gstreamer0.10-base
+    rm-configure: true
+    build-options:
+      cflags: -w
+    config-opts:
+      - --disable-static
+      - --disable-gtk-doc
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.36.tar.xz
+        sha256: 1fe45c3894903001d4d008b0713dab089f53726dcb5842d5b40c2595a984e64a
+      - type: patch
+        path: patches/gstreamer-plugins-base-0.10.36-audioresample-Fix-build-on-x86-if-emmintrin.h-is-ava.patch
+      - type: patch
+        path: patches/gstreamer-plugins-base-0.10.36-audioresample-It-s-HAVE_EMMINTRIN_H-not-HAVE_XMMINTR.patch
+      - type: patch
+        path: patches/gstreamer-plugins-base-0.10.36-typefind-bounds-check-windows-ico-detection.patch
+      - type: patch
+        path: patches/gstreamer-plugins-base-0.10.36-fix-gst-init.patch
+      - type: patch
+        path: patches/gstreamer-plugins-base-0.10.36-build-Adapt-to-backwards-incompatible-change-in-GNU-.patch
+        options: [-dcommon]
+
+  - name: XnRetro
+    buildsystem: simple
+    sources:
+      - type: archive
+        url: https://download.xnview.com/XnRetro-linux.tgz
+        sha256: e0912a4fd9d9e095f695bf6e89b81b3ed9894caca05d247fde9126b3102990cd
+        strip-components: 0
+        x-checker-data:
+          type: rotating-url
+          url: https://download.xnview.com/XnRetro-linux.tgz
+      - type: archive
+        url: https://download.xnview.com/old_versions/XnConvert/XnConvert-1.51-linux.tgz
+        sha256: 6dbb7d33f2fb974d3bdd3dd7f83ca43da5645a0c2b7ace03b154b7caba55b021
+        strip-components: 0
+      - type: archive
+        url: https://download.xnview.com/old_versions/XnConvert/XnConvert-1.51-linux-x64.tgz
+        sha256: 98947433c114d53013a45c24ad573287f00eaccd182aed58632be2a517af2f4f
+        strip-components: 0
+        only-arches: [x86_64]
+      - type: patch
+        path: patches/xnretro-1.01-wrapper.patch
+        strip-components: 0
+      - type: file
+        path: xnretro.png
+      - type: file
+        path: com.xnview.XnRetro.desktop
+      - type: file
+        path: com.xnview.XnRetro.appdata.xml
+    build-commands:
+      - cp -a "XnRetro" "${FLATPAK_DEST}/"
+      - |
+        for file in "XnConvert/lib"/{libQt*.so.4*,libphonon.so.4}; do
+          [[ -f "${file}" ]] || continue;
+          f="$( basename "${file}" )";
+          [[ ! -f "${FLATPAK_DEST}/XnRetro/lib/${f}" ]] || continue;
+          cp -a "${file}" "${FLATPAK_DEST}/XnRetro/lib/";
+        done;
+      - |
+        for file in "${FLATPAK_DEST}/lib"/{libQt*.so.4*,libphonon.so.4}; do
+          [[ -f "${file}" ]] || continue;
+          f="$( basename "${file}" )";
+          ln -sf "${file}" "${FLATPAK_DEST}/XnRetro/lib/";
+        done;
+      - ln -s "${FLATPAK_DEST}/XnRetro/xnretro.sh" "${FLATPAK_DEST}/bin/xnretro"
+      - install -Dm0644 "com.xnview.XnRetro.desktop" -t "${FLATPAK_DEST}/share/applications/"
+      - install -Dm0644 "com.xnview.XnRetro.appdata.xml" -t "${FLATPAK_DEST}/share/appdata/"
+      - install -Dm0644 "xnretro.png" "${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png"
+
   - name: 32bit-env-setup
     buildsystem: simple
     build-commands:
       - mkdir -p /app/lib/i386-linux-gnu
+
 cleanup:
   - /include
   - /lib/pkgconfig
-  - /share/gtk-doc
+  - /lib32/girepository-1.0
+  - /lib32/pkgconfig
+  - /share/aclocal
+  - /share/doc
+  - /share/et
+  - /share/examples
+  - /share/gir-1.0
+  - /share/gst-plugins-base
   - /share/man
-  - /XnRetro/XnRetro.desktop*
   - '*.la'
