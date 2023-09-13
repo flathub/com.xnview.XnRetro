@@ -108,14 +108,14 @@ modules:
 
   - name: orc
     buildsystem: meson
-    config-opts:
-      - -Dexamples=disabled
-      - -Dbenchmarks=disabled
-      - -Dtests=disabled
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.32.tar.xz # >=0.4.33 makes gstreamer0.10-base build fail
-        sha256: a66e3d8f2b7e65178d786a01ef61f2a0a0b4d0b8370de7ce134ba73da4af18f0
+        url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.34.tar.xz
+        sha256: 8f47abb3f097171e44eb807adcdabd860fba2effd37d8d3c4fbd5f341cadd41f
+    post-install:
+      # Move headers where gstreamer0.10-base expects
+      - mv /app/include/orc-0.4/orc /app/include/
+      - mv /app/include/orc-0.4/orc-test /app/include/
 
   - name: gstreamer0.10
     rm-configure: true
@@ -142,16 +142,7 @@ modules:
         url: https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.36.tar.xz
         sha256: 1fe45c3894903001d4d008b0713dab089f53726dcb5842d5b40c2595a984e64a
       - type: patch
-        path: patches/gstreamer-plugins-base-0.10.36-audioresample-Fix-build-on-x86-if-emmintrin.h-is-ava.patch
-      - type: patch
-        path: patches/gstreamer-plugins-base-0.10.36-audioresample-It-s-HAVE_EMMINTRIN_H-not-HAVE_XMMINTR.patch
-      - type: patch
-        path: patches/gstreamer-plugins-base-0.10.36-typefind-bounds-check-windows-ico-detection.patch
-      - type: patch
-        path: patches/gstreamer-plugins-base-0.10.36-fix-gst-init.patch
-      - type: patch
-        path: patches/gstreamer-plugins-base-0.10.36-build-Adapt-to-backwards-incompatible-change-in-GNU-.patch
-        options: [-dcommon]
+        path: patches/enum_headers.patch
 
   - name: XnRetro
     buildsystem: simple
