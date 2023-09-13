@@ -207,6 +207,7 @@ cleanup:
   - /share/et
   - /share/examples
   - /share/gir-1.0
+  - /share/gtk-doc
   - /share/gst-plugins-base
   - /share/man
   - '*.la'
