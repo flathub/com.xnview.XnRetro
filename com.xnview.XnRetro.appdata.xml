@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
   <id>com.xnview.XnRetro</id>
-  <metadata_license>CC0</metadata_license>
+  <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary</project_license>
   <name>XnRetro</name>
   <summary>Create stunning images with vintage or instant effect</summary>
@@ -26,6 +26,9 @@
   <url type="donation">https://www.xnview.com/</url>
   <url type="homepage">https://www.xnview.com/en/xnretro/</url>
   <url type="contact">https://www.xnview.com/en/about/</url>
+  <url type="help">https://newsgroup.xnview.com/viewforum.php?f=81</url>
+  <url type="translate">https://newsgroup.xnview.com/viewforum.php?f=81</url>
+  <update_contact>scx[dot]mail[at]gmail.com</update_contact>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/flathub/com.xnview.XnRetro/master/screenshots/Screenshot1.png</image>
@@ -41,11 +44,11 @@
     <id>XnRetro.desktop</id>
   </provides>
   <launchable type="desktop-id">com.xnview.XnRetro.desktop</launchable>
-  <content_rating type="oars-1.0">
+  <content_rating type="oars-1.1">
     <content_attribute id="social-info">mild</content_attribute>
   </content_rating>
   <releases>
-    <release version="1.26" date="2013-04-05" />
-    <release version="1.01" date="2012-07-21" />
+    <release date="2013-04-05" version="1.26"/>
+    <release date="2012-07-21" version="1.01"/>
   </releases>
 </component>
