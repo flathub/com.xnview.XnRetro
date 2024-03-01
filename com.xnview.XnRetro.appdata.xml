@@ -4,7 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary</project_license>
   <name>XnRetro</name>
-  <summary>Create stunning images with vintage or instant effect</summary>
+  <summary>Apply stunning effects to images</summary>
   <description>
     <p>XnRetro allows you to create stunning images with vintage or instant effect on your Desktop.</p>
     <p>Features:</p>
@@ -21,7 +21,9 @@
     <p>You are granted the right to use and to make an unlimited number of copies of this software.</p>
     <p>Copyright (C) 1997-2013 Pierre-e Gougelet. All rights reserved.</p>
   </description>
-  <developer_name>Pierre-e Gougelet</developer_name>
+  <developer id="com.xnview">
+    <name>Pierre-e Gougelet</name>
+  </developer>
   <url type="bugtracker">https://newsgroup.xnview.com/viewforum.php?f=81</url>
   <url type="donation">https://www.xnview.com/</url>
   <url type="homepage">https://www.xnview.com/en/xnretro/</url>
@@ -29,6 +31,10 @@
   <url type="help">https://newsgroup.xnview.com/viewforum.php?f=81</url>
   <url type="translate">https://newsgroup.xnview.com/viewforum.php?f=81</url>
   <update_contact>scx[dot]mail[at]gmail.com</update_contact>
+  <branding>
+    <color type="primary" scheme_preference="light">#E6E2D5</color>
+    <color type="primary" scheme_preference="dark">#BFB38A</color>
+  </branding>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/flathub/com.xnview.XnRetro/master/screenshots/Screenshot1.png</image>
