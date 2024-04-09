@@ -108,6 +108,14 @@ modules:
 
   - name: orc
     buildsystem: meson
+    build-options:
+      env:
+        LIBRARY_PATH: /app/lib
+    config-opts:
+      - -Dbenchmarks=disabled
+      - -Dexamples=disabled
+      - -Dgtk_doc=disabled
+      - -Dtests=disabled
     sources:
       - type: archive
         url: https://gstreamer.freedesktop.org/src/orc/orc-0.4.34.tar.xz
@@ -134,6 +142,8 @@ modules:
     rm-configure: true
     build-options:
       cflags: -w
+      env:
+        LD_LIBRARY_PATH: /app/lib32
     config-opts:
       - --disable-static
       - --disable-gtk-doc
