@@ -1,4 +1,3 @@
 {
-  "skip-arches": ["aarch64"],
-  "disable-external-data-checker": true
+  "skip-arches": ["aarch64"]
 }
