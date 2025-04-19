@@ -1,6 +1,6 @@
 app-id: com.xnview.XnRetro
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 command: xnretro
 finish-args:
@@ -19,7 +19,7 @@ tags:
 add-extensions:
   org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
-    version: '23.08'
+    version: '24.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Compat.i386
   - org.freedesktop.Sdk.Extension.toolchain-i386
@@ -127,6 +127,8 @@ modules:
 
   - name: gstreamer0.10
     rm-configure: true
+    build-options:
+      cflags: -Wno-error=implicit-function-declaration
     config-opts:
       - --disable-static
       - --disable-examples
@@ -141,7 +143,7 @@ modules:
   - name: gstreamer0.10-base
     rm-configure: true
     build-options:
-      cflags: -w
+      cflags: -w -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types
       env:
         LD_LIBRARY_PATH: /app/lib32
     config-opts:
