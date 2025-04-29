@@ -62,8 +62,8 @@ modules:
       - --with-drivers=FILES
     sources:
       - type: archive
-        url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10050/ghostscript-10.05.0.tar.xz
-        sha256: aac9c4fdf61805a76f6220012735c1ae832813788314bfc04055cc0c8959b9a3
+        url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.xz
+        sha256: 22f2bdca15c28830c9715cddc5c296ea66898bfdab0b604a4e0bcfeb03af6cad
         x-checker-data:
           type: anitya
           project-id: 1157
