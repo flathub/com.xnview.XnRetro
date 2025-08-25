@@ -44,8 +44,8 @@ modules:
       - --with-png
     sources:
       - type: archive
-        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-1.tar.gz
-        sha256: 9306407381a7bf0ac5d97074eca3ce9dfaac65ced4d44f6a47bc24fbfc693e9a
+        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.2-2.tar.gz
+        sha256: f511deb5827b07906e0558640a436a96644949dfd6bb21b1a641b09690ac3bdc
         x-checker-data:
           type: anitya
           project-id: 1372
@@ -82,8 +82,8 @@ modules:
       - --disable-rpath
     sources:
       - type: archive
-        url: https://kerberos.org/dist/krb5/1.22/krb5-1.22.tar.gz
-        sha256: 652be617b4647f3c5dcac21547d47c7097101aad4e306f1778fb48e17b220ba3
+        url: https://kerberos.org/dist/krb5/1.22/krb5-1.22.1.tar.gz
+        sha256: 1a8832b8cad923ebbf1394f67e2efcf41e3a49f460285a66e35adec8fa0053af
         x-checker-data:
           type: html
           url: https://kerberos.org/dist/
