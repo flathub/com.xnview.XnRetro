@@ -72,6 +72,8 @@ modules:
       - type: shell
         commands:
           - rm -rf tesseract leptonica gpdl cups/libs jpeg libpng openjpeg tiff zlib
+      - type: patch
+        path: patches/ghostscript-gcc15.patch
 
   - name: krb5
     subdir: src
