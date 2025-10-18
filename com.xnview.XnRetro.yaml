@@ -8,7 +8,7 @@ finish-args:
   - --share=ipc
   - --socket=x11
   # Filesystem access
-  - --filesystem=home
+  - --filesystem=xdg-pictures
   # OpenGL access
   - --device=dri
   # 32-bit execution
