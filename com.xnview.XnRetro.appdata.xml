@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
+<component type="desktop-application">
   <id>com.xnview.XnRetro</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LicenseRef-proprietary</project_license>
   <name>XnRetro</name>
   <summary>Apply stunning effects to images</summary>
   <description>
+    <p>**This is a community package of XnRetro and not officially supported by Pierre-e Gougelet.**</p>
     <p>XnRetro allows you to create stunning images with vintage or instant effect on your Desktop.</p>
     <p>Features:</p>
     <ul>
       <li>20 color effects</li>
       <li>15 light effects such as bokeh, leak</li>
       <li>28 frame borders</li>
-      <li>Adjustement like contrast, gamma, saturation, ...</li>
+      <li> Adjustment like contrast, gamma, saturation, ...</li>
       <li>Vignetting</li>
       <li>Noise</li>
       <li>Save or share the result</li>
